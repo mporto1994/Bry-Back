@@ -8,25 +8,50 @@ import org.springframework.stereotype.Service;
 import com.api.Bry.models.User;
 import com.api.Bry.repositories.UserRepository;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class UserService {
     
     // Autowired, "construtor" da interface
-
     @Autowired
     private UserRepository  userRepository;
 
 
-    public Optional<User> findById(Long id) {
-        Optional<User> userOptional = userRepository.findById(id);
+    public User findById(Long id) {
+        return userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Could not find the user ID:" + id));
+    }
 
-        if (userOptional.isPresent()) {
-            return userOptional;
-        } else {
-            throw new RuntimeException("Could not find the user with ID: " + id);
-        }
+    // Pesquisar mais
+    // @Transactional
+    public User create(User userObj) {
+        userObj.setId(null);
+        userObj =  this.userRepository.save(userObj);
+
+        return userObj;
+    }
+
+    public User update(User user){
+        User existingUser = findById(user.getId());
+    
+        existingUser.setPassword(user.getPassword());
+        existingUser.setName(user.getName());
+        existingUser.setPicture(user.getPicture());
+    
+        return this.userRepository.save(existingUser);
     }
 
 
+    public void delete(Long id){
+        
+        findById(id);
+
+        try {
+            this.userRepository.deleteById(id);
+        } catch (Exception e){
+            throw new RuntimeException("User not found id:" + id);
+        }
+    }
 
 }
