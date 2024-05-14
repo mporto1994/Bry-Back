@@ -1,5 +1,6 @@
 package com.api.Bry.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,10 @@ public class UserService {
     public User findById(Long id) {
         return userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Could not find the user ID:" + id));
+    }
+
+    public List<User> findAll() {
+        return userRepository.findAll();
     }
 
     // Pesquisar mais

@@ -17,7 +17,7 @@ public class User {
     public interface CreateUser {}
     public interface UpdateUser {}
 
-    public static final String TABLE_STRING = "user";
+    public static final String TABLE_STRING = "users"; 
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -52,14 +52,14 @@ public class User {
     @NotEmpty(groups = {CreateUser.class, UpdateUser.class})
     @NotNull(groups = {CreateUser.class, UpdateUser.class})
     @Size(groups = {CreateUser.class, UpdateUser.class}, min = 2, max = 300)
-    private Long picture;
+    private String picture;
 
     public User(){
 
     }
 
 
-    public User(Long id, String username, String name, String cpf, String password, Long picture) {
+    public User(Long id, String username, String name, String cpf, String password, String picture) {
         this.id = id;
         this.username = username;
         this.name = name;
@@ -109,15 +109,21 @@ public class User {
         this.password = password;
     }
 
-    public Long getPicture() {
+    public String getPicture() {
         return this.picture;
     }
 
-    public void setPicture(Long picture) {
+    public void setPicture(String picture) {
         this.picture = picture;
     }
     
-
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + (this.id == null ? 0 : this.id.hashCode());
+        return result;
+    }
     
 
 }

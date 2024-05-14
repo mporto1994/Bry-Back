@@ -1,6 +1,7 @@
 package com.api.Bry.controller;
 
 import java.net.URI;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -42,7 +43,14 @@ public class UserController {
         return ResponseEntity.ok().body(obj);
     }
 
-    @PostMapping("/new")
+    @GetMapping("/")
+    public ResponseEntity<List<User>> findAll() {
+        List<User> users = this.userService.findAll();
+    
+        return ResponseEntity.ok().body(users);
+    }
+
+    @PostMapping("/register")
     @Validated(CreateUser.class)
     public ResponseEntity<Void> create(@Valid @RequestBody User userObj) {
         this.userService.create(userObj);
@@ -53,7 +61,7 @@ public class UserController {
         return ResponseEntity.created(URI.create(uri)).build();
     }
     
-    @PutMapping("/{id}")
+    @PutMapping("/update/{id}")
     @Validated(UpdateUser.class)
     public ResponseEntity<Void> update(@Valid  @PathVariable Long id, @RequestBody User userObj ) {
         userObj.setId(id);
@@ -62,7 +70,7 @@ public class UserController {
         return ResponseEntity.noContent().build();
     }
     
-    @PutMapping("/{id}")
+    @PutMapping("/delete/{id}")
     public ResponseEntity<Void> delete( @PathVariable Long id ) {
 
         this.userService.delete(id);

@@ -6,7 +6,7 @@
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>3.2.5</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<relativePath/> 
 	</parent>
 	<groupId>com.api</groupId>
 	<artifactId>Bry</artifactId>
@@ -14,7 +14,9 @@
 	<name>Bry</name>
 	<description>Spring Boot API for To Do App</description>
 	<properties>
-		<java.version>17</java.version>
+		<java.version>17.0.10</java.version>
+   		<maven.compiler.release>11</maven.compiler.release>
+		<property name="hibernate.hbm2ddl.auto">create</property>
 	</properties>
 	<dependencies>
 
@@ -50,6 +52,13 @@
 			<artifactId>h2</artifactId>
 			<scope>runtime</scope>
 		</dependency>
+
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<version>42.2.23</version> 
+		</dependency>
+
 		<dependency>
 			<groupId>com.mysql</groupId>
 			<artifactId>mysql-connector-j</artifactId>
@@ -58,6 +67,7 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
+			<version>3.2.5</version> 
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
@@ -65,9 +75,10 @@
 	<build>
 		<plugins>
 			<plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
+       		   <groupId>org.apache.maven.plugins</groupId>
+      		   <artifactId>maven-compiler-plugin</artifactId>
+      		   <version>3.11.0</version>
+      		</plugin>
 		</plugins>
 	</build>
 
